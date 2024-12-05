@@ -4,22 +4,26 @@ from aiogram.types import BotCommand
 
 async def set_main_menu(bot: Bot) -> None:
     commands = [
-        # BotCommand(
-        #     command='/start',
-        #     description='Войти'
-        # ),
-        # BotCommand(
-        #     command='/register',
-        #     description='Регистрация'
-        # ),
-        # BotCommand(
-        #     command='/enter_scores',
-        #     description='Ввести свои баллы ЕГЭ'
-        # ),
-        # BotCommand(
-        #     command='/view_scores',
-        #     description='Посмотреть мои баллы ЕГЭ'
-        # ),
+        BotCommand(
+            command='/start',
+            description='Начало'
+        ),
+        BotCommand(
+            command='/login',
+            description='Войти'
+        ),
+        BotCommand(
+            command='/register',
+            description='Регистрация'
+        ),
+        BotCommand(
+            command='/enter_scores',
+            description='Ввести свои баллы ЕГЭ'
+        ),
+        BotCommand(
+            command='/view_scores',
+            description='Посмотреть мои баллы ЕГЭ'
+        ),
 
     ]
 
