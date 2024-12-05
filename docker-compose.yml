@@ -40,7 +40,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    command: alembic upgrade head && python main.py
+    command: bash -c "alembic upgrade head && python main.py"
     restart: "no"
     depends_on:
       - postgres

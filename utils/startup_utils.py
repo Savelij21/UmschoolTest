@@ -1,5 +1,7 @@
 from aiogram import Bot
+from sqlalchemy import select
 from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker
+from sqlalchemy.sql.functions import count
 
 from config_data.config import Config
 from db.models import Base, Subject
@@ -14,10 +16,6 @@ async def get_session_maker(config: Config) -> async_sessionmaker:
         url=str(config.db.dsn),
         echo=False  # config.db.is_echo
     )
-    # -- test db connection
-    # async with db_engine.begin() as conn:
-    #     await conn.run_sync(Base.metadata.drop_all)
-    #     await conn.run_sync(Base.metadata.create_all)
 
     # -- init session_maker
     session_maker = async_sessionmaker(
@@ -26,16 +24,20 @@ async def get_session_maker(config: Config) -> async_sessionmaker:
     )
 
     # -- DEV: create subjects
-    # async with session_maker() as session:
-    #     session.add_all([
-    #         Subject(name='Математика'),
-    #         Subject(name='Русский язык'),
-    #         Subject(name='Литература'),
-    #         Subject(name='Физика'),
-    #         Subject(name='Химия'),
-    #         Subject(name='Информатика'),
-    #     ])
-    #     await session.commit()
+    async with session_maker() as session:
+        result = await session.execute(select(count()).select_from(Subject))
+
+        if result.scalar() == 0:
+            session.add_all([
+                Subject(name='Математика'),
+                Subject(name='Русский язык'),
+                Subject(name='Литература'),
+                Subject(name='Физика'),
+                Subject(name='Химия'),
+                Subject(name='Информатика'),
+            ])
+            await session.commit()
+            print('DEV: default subjects added to DB')
 
     return session_maker
 
