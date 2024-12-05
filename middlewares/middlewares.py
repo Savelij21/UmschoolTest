@@ -9,6 +9,9 @@ logger = logging.getLogger(__name__)
 
 
 class PrepareUpdateMiddleware(BaseMiddleware):
+    """
+    Outer миддлварь для для получения update_id для всех апдейтов
+    """
 
     async def __call__(
         self,
@@ -23,6 +26,9 @@ class PrepareUpdateMiddleware(BaseMiddleware):
 
 
 class InnerLogHandlerMiddleware(BaseMiddleware):
+    """
+    Inner миддлварь для логирования всех апдейтов
+    """
 
     async def __call__(
         self,

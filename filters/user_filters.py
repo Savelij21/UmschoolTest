@@ -7,6 +7,9 @@ from sqlalchemy.ext.asyncio import async_sessionmaker
 
 
 class IsLoggedIn(BaseFilter):
+    """
+    Класс фильтра для проверки, что юзер залогинен
+    """
     async def __call__(self, update: Update, state: FSMContext) -> bool:
         user_data = await state.get_data()
         return user_data.get('is_logged', None)
