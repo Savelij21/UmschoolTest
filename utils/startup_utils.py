@@ -15,9 +15,9 @@ async def get_session_maker(config: Config) -> async_sessionmaker:
         echo=False  # config.db.is_echo
     )
     # -- test db connection
-    async with db_engine.begin() as conn:
-        await conn.run_sync(Base.metadata.drop_all)
-        await conn.run_sync(Base.metadata.create_all)
+    # async with db_engine.begin() as conn:
+    #     await conn.run_sync(Base.metadata.drop_all)
+    #     await conn.run_sync(Base.metadata.create_all)
 
     # -- init session_maker
     session_maker = async_sessionmaker(
@@ -26,16 +26,16 @@ async def get_session_maker(config: Config) -> async_sessionmaker:
     )
 
     # -- DEV: create subjects
-    async with session_maker() as session:
-        session.add_all([
-            Subject(name='Математика'),
-            Subject(name='Русский язык'),
-            Subject(name='Литература'),
-            Subject(name='Физика'),
-            Subject(name='Химия'),
-            Subject(name='Информатика'),
-        ])
-        await session.commit()
+    # async with session_maker() as session:
+    #     session.add_all([
+    #         Subject(name='Математика'),
+    #         Subject(name='Русский язык'),
+    #         Subject(name='Литература'),
+    #         Subject(name='Физика'),
+    #         Subject(name='Химия'),
+    #         Subject(name='Информатика'),
+    #     ])
+    #     await session.commit()
 
     return session_maker
 

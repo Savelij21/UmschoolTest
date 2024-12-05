@@ -1,0 +1,14 @@
+venv/
+.log
+cache/
+
+logs/
+
+.git
+.gitignore
+
+../README.md
+__pycache__
+
+Dockerfile
+env

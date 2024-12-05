@@ -1,4 +1,7 @@
-version: '3.8'
+
+
+networks:
+  umschool_network:
 
 services:
 
@@ -14,6 +17,8 @@ services:
       POSTGRES_DB: data
     volumes:
       - "01-simple-alchemy-postgres:/var/lib/postgresql/data"
+    networks:
+      - umschool_network
 
   pgadmin:
     image: dpage/pgadmin4:latest
@@ -27,6 +32,22 @@ services:
       - "01-simple-alchemy-pgadmin:/var/lib/pgadmin"
     depends_on:
       - postgres
+    networks:
+      - umschool_network
+
+
+  aiogram_bot:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: alembic upgrade head && python main.py
+    restart: "no"
+    depends_on:
+      - postgres
+    env_file:
+      - .env
+    networks:
+      - umschool_network
 
 volumes:
   01-simple-alchemy-pgadmin:
